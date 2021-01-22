@@ -3,6 +3,7 @@ Test of PyTorch DistributedDataParallel for Cori GPU installations
 """
 
 import os
+import socket
 import argparse
 
 import torch
@@ -30,13 +31,15 @@ def main():
     init_workers(args.backend, args.init_method)
     rank, n_ranks = dist.get_rank(), dist.get_world_size()
     local_rank = rank % args.ranks_per_node
-    print('Initialized rank', rank, 'local-rank', local_rank, 'size', n_ranks)
+    print('Initialized host', socket.gethostname(),
+          'rank', rank, 'local-rank', local_rank, 'size', n_ranks)
 
     if args.gpu:
         torch.cuda.set_device(local_rank)
         device = torch.device('cuda', local_rank)
     else:
         device = torch.device('cpu')
+    print(device)
 
     # Random number dataset
     print('Generating a batch of data')
