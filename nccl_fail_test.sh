@@ -20,6 +20,7 @@ echo "DDP NCCL training test"
 srun -N 1 -n 1 python pytorch_info.py
 
 # Run a distributed training test
-srun -u -l python test_ddp.py --gpu --backend nccl --init-method slurm
+srun -u -l python test_ddp.py --gpu --backend nccl --init-method slurm \
+    --ranks-per-node $SLURM_NTASKS_PER_NODE
 
 echo "All done!"
