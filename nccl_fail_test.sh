@@ -12,7 +12,7 @@ module load cgpu pytorch/1.7.1-gpu
 module list
 
 # NCCL debug output
-export NCCL_DEBUG=INFO
+#export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=ALL
 
 # Dump some information
