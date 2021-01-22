@@ -66,8 +66,8 @@ def main():
     device_ids = [device] if args.gpu else None
     model = DistributedDataParallel(model, device_ids=device_ids)
 
-    if rank == 0:
-        print(model)
+    #if rank == 0:
+    #    print(model)
 
     # Loss function
     loss_fn = torch.nn.CrossEntropyLoss().to(device)
