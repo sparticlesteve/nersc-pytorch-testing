@@ -5,7 +5,7 @@
 #SBATCH --gpus-per-task 1
 #SBATCH --cpus-per-task 10
 #SBATCH --time 5
-#SBATCH --image nersc/pytorch:ngc-20.10-v0
+#SBATCH --image nersc/pytorch:ngc-20.12-v0
 #SBATCH -o nccl-test-shifter-%j.out
 
 set -x
