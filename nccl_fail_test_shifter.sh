@@ -12,6 +12,8 @@ set -x
 
 # NCCL debug output
 export NCCL_DEBUG=INFO
+export NCCL_SOCKET_IFNAME=eth
+export NCCL_IB_HCA=mlx5_0:1,mlx5_2:1,mlx5_4:1,mlx5_6:1
 
 # Dump some information
 srun -N 1 -n 1 shifter python pytorch_info.py
