@@ -25,6 +25,10 @@ print('NCCL available:   ', torch.distributed.is_nccl_available())
 print('GLOO available:   ', torch.distributed.is_gloo_available())
 print()
 
+print('NCCL version:     ', torch.cuda.nccl.version()
+    if torch.distributed.is_nccl_available() else None)
+print()
+
 try:
     import torchvision
     print('torchvision:      ', torchvision.__version__)
