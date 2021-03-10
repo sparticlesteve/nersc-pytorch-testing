@@ -85,6 +85,9 @@ def main():
     loss.backward()
     optimizer.step()
 
+    # Testing a barrier at the end
+    torch.distributed.barrier()
+
     print('Finished')
 
 if __name__ == '__main__':
