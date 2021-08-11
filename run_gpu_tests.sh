@@ -9,6 +9,7 @@
 
 echo "-------------------------------------------------------------------------"
 echo "Single GPU unit tests"
+srun -N 1 -n 1 -u python pytorch_info.py
 srun -N 1 -n 1 -u python test_install.py --cuda --vision --geometric
 
 echo "-------------------------------------------------------------------------"
