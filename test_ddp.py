@@ -20,7 +20,8 @@ def parse_args():
     parser.add_argument('--ranks-per-node', type=int, default=8)
     parser.add_argument('--backend', default='nccl',
                         choices=['mpi', 'nccl', 'gloo'])
-    parser.add_argument('--init-method', choices=['slurm', 'file'])
+    parser.add_argument('--init-method', default='slurm',
+                        choices=['slurm', 'file'])
     parser.add_argument('--gpu', action='store_true', help='Use GPUs')
     return parser.parse_args()
 
