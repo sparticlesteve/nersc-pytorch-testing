@@ -15,7 +15,7 @@ def _get_sync_file():
         sync_file_dir, os.environ['SLURM_JOB_ID'], os.environ['SLURM_STEP_ID'])
     return sync_file
 
-def init_workers(backend, init_method, port='29500'):
+def init_workers(backend, init_method, port='29507'):
     """
     Args:
       - backend: can be 'mpi', 'nccl', or 'gloo'
