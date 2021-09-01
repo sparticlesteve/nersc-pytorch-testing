@@ -24,7 +24,14 @@ def init_workers(backend, init_method, port='29507'):
 
     init_args = dict(backend=backend)
 
-    if init_method == 'slurm':
+    if init_method == 'env':
+        rank = int(os.environ['SLURM_PROCID'])
+        world_size = int(os.environ['SLURM_NTASKS'])
+        print('Distributed init with master addr ' +
+              f'{os.environ["MASTER_ADDR"]} port {os.environ["MASTER_PORT"]}')
+        init_args.update(rank=rank, world_size=world_size)
+
+    elif init_method == 'slurm':
         rank = int(os.environ['SLURM_PROCID'])
         world_size = int(os.environ['SLURM_NTASKS'])
         os.environ['MASTER_ADDR'] = os.environ['SLURM_LAUNCH_NODE_IPADDR']
