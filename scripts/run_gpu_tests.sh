@@ -1,4 +1,5 @@
 #!/bin/bash -e
+#SBATCH -J gpu-tests
 #SBATCH -C gpu
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=4
@@ -6,7 +7,7 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --exclusive
 #SBATCH -t 30
-#SBATCH -o slurm-gpu-test-%j.out
+#SBATCH -o logs/%x-%j.out
 
 cd integration-tests
 

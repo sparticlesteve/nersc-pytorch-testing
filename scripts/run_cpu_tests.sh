@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
+#SBATCH -J cpu-tests
 #SBATCH -C haswell
 #SBATCH -N 2
 #SBATCH -q debug
 #SBATCH -t 10
-#SBATCH -o slurm-cpu-test-%j.out
-
-set -e
+#SBATCH -o logs/%x-%j.out
 
 cd integration-tests
 
