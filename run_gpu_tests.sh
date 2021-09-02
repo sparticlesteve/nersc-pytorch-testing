@@ -1,9 +1,10 @@
 #!/bin/bash -e
 #SBATCH -C gpu
-#SBATCH -N 1
-#SBATCH --gres=gpu:8
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=4
+#SBATCH --gpus-per-task=1
+#SBATCH --cpus-per-task=10
 #SBATCH --exclusive
-#SBATCH -c 10
 #SBATCH -t 30
 #SBATCH -o slurm-gpu-test-%j.out
 
@@ -20,20 +21,23 @@ echo "-------------------------------------------------------------------------"
 echo "DDP NCCL training test"
 #export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=ALL
-srun --ntasks-per-node 8 -u -l python test_ddp.py --gpu --backend nccl --init-method slurm
+srun -u -l python test_ddp.py --gpu --backend nccl --init-method slurm \
+    --ranks-per-node=$SLURM_NTASKS_PER_NODE
 
 # Disabling failing MPI test
 #echo "-------------------------------------------------------------------------"
 #echo "DDP MPI training test"
-#srun --ntasks-per-node 8 -u -l python test_ddp.py --backend mpi --gpu
+#srun -u -l python test_ddp.py --backend mpi --gpu \
+#    --ranks-per-node=$SLURM_NTASKS_PER_NODE
 
 echo "-------------------------------------------------------------------------"
 echo "DDP Gloo training test"
-srun --ntasks-per-node 8 -u -l python test_ddp.py --gpu --backend gloo --init-method slurm
+srun -u -l python test_ddp.py --gpu --backend gloo --init-method slurm \
+    --ranks-per-node=$SLURM_NTASKS_PER_NODE
 
 echo "-------------------------------------------------------------------------"
 echo "PyTorch Geometric training test"
-srun -n 1 -u python test_gcn.py
+srun -N 1 -n 1 -u python test_gcn.py
 
 echo "-------------------------------------------------------------------------"
 echo "MPI4Py test"
