@@ -7,6 +7,8 @@
 
 set -e
 
+cd integration-tests
+
 echo "-------------------------------------------------------------------------"
 echo "Single node unit tests"
 # There seems to be a data race in a cache directory creation if

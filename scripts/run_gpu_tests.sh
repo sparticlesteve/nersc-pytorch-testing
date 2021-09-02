@@ -8,6 +8,8 @@
 #SBATCH -t 30
 #SBATCH -o slurm-gpu-test-%j.out
 
+cd integration-tests
+
 echo "-------------------------------------------------------------------------"
 echo "Single GPU unit tests"
 srun -N 1 -n 1 -u python pytorch_info.py
