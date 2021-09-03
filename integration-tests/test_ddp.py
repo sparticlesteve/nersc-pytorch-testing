@@ -40,7 +40,7 @@ def main():
         device = torch.device('cuda', local_rank)
     else:
         device = torch.device('cpu')
-    print(device)
+    print('Using device:', device)
 
     # Random number dataset
     print('Generating a batch of data')
