@@ -12,9 +12,12 @@ echo "PyTorch CPU unit tests"
 echo "Cluster: $SLURM_CLUSTER_NAME"
 echo "Nodes: $SLURM_JOB_NODELIST"
 echo "Tasks: $SLURM_NTASKS"
+echo "Image: $SLURM_SPANK_SHIFTER_IMAGEREQUEST"
 echo "Extra args: $@"
 module list
-echo ""
+
+[ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER=shifter
 
 set -x
-srun -N 1 -n 1 -u pytest unit-tests/test_common.py unit-tests/test_cpu.py $@
+srun -N 1 -n 1 -u ${SHIFTER} pytest \
+    unit-tests/test_common.py unit-tests/test_cpu.py $@

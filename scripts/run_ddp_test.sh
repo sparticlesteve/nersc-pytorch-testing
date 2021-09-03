@@ -17,12 +17,15 @@ echo "PyTorch DDP test"
 echo "Cluster: $SLURM_CLUSTER_NAME"
 echo "Nodes: $SLURM_JOB_NODELIST"
 echo "Tasks/node: $SLURM_NTASKS_PER_NODE"
+echo "Image: $SLURM_SPANK_SHIFTER_IMAGEREQUEST"
 echo "Extra args: $@"
 module list
 
+[ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER=shifter
 export MASTER_ADDR=$(hostname)
 export MASTER_PORT=29507
 
 set -x
 cd integration-tests
-srun -u -l python test_ddp.py --ranks-per-node $SLURM_NTASKS_PER_NODE --gpu $@
+srun -u -l ${SHIFTER} python test_ddp.py \
+    --ranks-per-node ${SLURM_NTASKS_PER_NODE} --gpu $@
