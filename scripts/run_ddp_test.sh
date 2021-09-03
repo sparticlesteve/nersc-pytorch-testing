@@ -20,6 +20,9 @@ echo "Tasks/node: $SLURM_NTASKS_PER_NODE"
 echo "Extra args: $@"
 module list
 
+export MASTER_ADDR=$(hostname)
+export MASTER_PORT=29507
+
 set -x
 cd integration-tests
 srun -u -l python test_ddp.py --ranks-per-node $SLURM_NTASKS_PER_NODE --gpu $@

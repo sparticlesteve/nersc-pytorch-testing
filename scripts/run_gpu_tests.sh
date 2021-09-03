@@ -18,8 +18,8 @@ srun -N 1 -n 1 -u python utils/pytorch_info.py
 # DDP NCCL training tests
 export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=ALL
-./scripts/run_ddp_test.sh --backend nccl --init-method slurm
-./scripts/run_ddp_test.sh --backend gloo --init-method slurm
+./scripts/run_ddp_test.sh --backend nccl
+./scripts/run_ddp_test.sh --backend gloo
 
 # PyTorch Geometric training test
 ./scripts/run_gcn_test.sh
