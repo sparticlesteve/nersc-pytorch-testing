@@ -9,39 +9,20 @@
 #SBATCH -t 30
 #SBATCH -o logs/%x-%j.out
 
-cd integration-tests
+# PyTorch summary dump
+srun -N 1 -n 1 -u python utils/pytorch_info.py
 
-echo "-------------------------------------------------------------------------"
-echo "Single GPU unit tests"
-srun -N 1 -n 1 -u python pytorch_info.py
-srun -N 1 -n 1 -u python test_install.py --cuda --vision --geometric
+# GPU unit tests
+./scripts/run_gpu_unit_tests.sh
 
-#echo "-------------------------------------------------------------------------"
-#echo "Multi GPU unit tests"
-#srun --ntasks-per-node 8 -u -l python test_install.py --mpi --cuda
-
-echo "-------------------------------------------------------------------------"
-echo "DDP NCCL training test"
-#export NCCL_DEBUG=INFO
+# DDP NCCL training tests
+export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=ALL
-srun -u -l python test_ddp.py --gpu --backend nccl --init-method slurm \
-    --ranks-per-node=$SLURM_NTASKS_PER_NODE
+./scripts/run_ddp_test.sh --backend nccl --init-method slurm
+./scripts/run_ddp_test.sh --backend gloo --init-method slurm
 
-# Disabling failing MPI test
-#echo "-------------------------------------------------------------------------"
-#echo "DDP MPI training test"
-#srun -u -l python test_ddp.py --backend mpi --gpu \
-#    --ranks-per-node=$SLURM_NTASKS_PER_NODE
+# PyTorch Geometric training test
+./scripts/run_gcn_test.sh
 
-echo "-------------------------------------------------------------------------"
-echo "DDP Gloo training test"
-srun -u -l python test_ddp.py --gpu --backend gloo --init-method slurm \
-    --ranks-per-node=$SLURM_NTASKS_PER_NODE
-
-echo "-------------------------------------------------------------------------"
-echo "PyTorch Geometric training test"
-srun -N 1 -n 1 -u python test_gcn.py
-
-echo "-------------------------------------------------------------------------"
-echo "MPI4Py test"
-srun -l -u python -m mpi4py.bench helloworld
+# MPI4Py test
+./scripts/run_mpi4py_test.sh
