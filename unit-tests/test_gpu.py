@@ -20,6 +20,3 @@ def test_mpi():
 def test_mkl():
     assert torch.backends.mkl.is_available()
     assert torch.backends.mkldnn.is_available()
-
-def test_fail():
-    assert False
