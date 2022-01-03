@@ -10,7 +10,11 @@
 #SBATCH -o logs/%x-%j.out
 
 # PyTorch summary dump
-srun -N 1 -n 1 -u python utils/pytorch_info.py
+if [ ! -z $SLURM_SPANK_SHIFTER_IMAGE ]; then
+    srun -N 1 -n 1 -u shifter python utils/pytorch_info.py
+else
+    srun -N 1 -n 1 -u python utils/pytorch_info.py
+fi
 
 # GPU unit tests
 ./scripts/run_gpu_unit_tests.sh
