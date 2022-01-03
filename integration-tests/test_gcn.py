@@ -114,6 +114,6 @@ loss = train()
 if do_eval:
     print('Evaluating model')
     train_acc, val_acc, test_acc = test()
-    print(f'Epoch: 0, Loss: {loss:.4f}, Train: {train_acc:.4f}, '
+    print(f'Epoch: 0, Loss: {loss:.4f}, Train: {train_acc:.4f}, ' +
           f'Val: {val_acc:.4f}, test: {test_acc:.4f}')
 print('All done')
