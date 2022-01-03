@@ -9,6 +9,8 @@
 #SBATCH -t 30
 #SBATCH -o logs/%x-%j.out
 
+srun -N 1 -n 1 -u nvidia-smi
+
 # PyTorch summary dump
 if [ ! -z $SLURM_SPANK_SHIFTER_IMAGE ]; then
     srun -N 1 -n 1 -u shifter python utils/pytorch_info.py
