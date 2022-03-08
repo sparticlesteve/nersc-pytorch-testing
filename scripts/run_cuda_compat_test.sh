@@ -21,4 +21,4 @@ module list
 
 [ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER=shifter
 srun -u -l ${SHIFTER} bash -c 'nvidia-smi | grep CUDA'
-#srun -u -l ${SHIFTER} echo `hostname` cuda_compat_status $_CUDA_COMPAT_STATUS
+srun -u -l ${SHIFTER} echo `hostname` cuda_compat_status $_CUDA_COMPAT_STATUS
