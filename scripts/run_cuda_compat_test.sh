@@ -5,7 +5,7 @@
 #SBATCH -t 5
 #SBATCH --ntasks-per-node 4
 #SBATCH --cpus-per-task 4
-#SBATCH --gpus-per-task 1
+#SBATCH --gpus-per-node 4
 #SBATCH -o logs/%x-%j.out
 
 # For this test for now you have to check that the printed CUDA version

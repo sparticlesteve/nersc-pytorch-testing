@@ -3,7 +3,7 @@
 #SBATCH -C gpu
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=4
-#SBATCH --gpus-per-task=1
+#SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=10
 #SBATCH --exclusive
 #SBATCH -t 30
