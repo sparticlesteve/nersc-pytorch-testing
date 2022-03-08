@@ -5,7 +5,7 @@
 #SBATCH -t 30
 #SBATCH --ntasks-per-node 4
 #SBATCH --cpus-per-task 10
-#SBATCH --gpus-per-task 1
+#SBATCH --gpus-per-node 4
 #SBATCH -o logs/%x-%j.out
 
 # To run with NCCL debug, submit like this:

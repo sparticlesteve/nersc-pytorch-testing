@@ -3,14 +3,20 @@
 #SBATCH -C gpu
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=4
-#SBATCH --gpus-per-task=1
+#SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=10
 #SBATCH --exclusive
 #SBATCH -t 30
 #SBATCH -o logs/%x-%j.out
 
+srun -N 1 -n 1 -u nvidia-smi
+
 # PyTorch summary dump
-srun -N 1 -n 1 -u python utils/pytorch_info.py
+if [ ! -z $SLURM_SPANK_SHIFTER_IMAGE ]; then
+    srun -N 1 -n 1 -u shifter python utils/pytorch_info.py
+else
+    srun -N 1 -n 1 -u python utils/pytorch_info.py
+fi
 
 # GPU unit tests
 ./scripts/run_gpu_unit_tests.sh

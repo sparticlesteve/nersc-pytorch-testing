@@ -5,7 +5,7 @@
 #SBATCH -t 5
 #SBATCH --ntasks-per-node 4
 #SBATCH --cpus-per-task 4
-#SBATCH --gpus-per-task 1
+#SBATCH --gpus-per-node 4
 #SBATCH -o logs/%x-%j.out
 
 # For this test for now you have to check that the printed CUDA version
@@ -21,4 +21,4 @@ module list
 
 [ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER=shifter
 srun -u -l ${SHIFTER} bash -c 'nvidia-smi | grep CUDA'
-#srun -u -l ${SHIFTER} echo `hostname` cuda_compat_status $_CUDA_COMPAT_STATUS
+srun -u -l ${SHIFTER} echo `hostname` cuda_compat_status $_CUDA_COMPAT_STATUS
