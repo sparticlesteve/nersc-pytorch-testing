@@ -27,5 +27,4 @@ export MASTER_PORT=29507
 
 set -x
 cd integration-tests
-srun -u -l ${SHIFTER} python test_ddp.py \
-    --ranks-per-node ${SLURM_NTASKS_PER_NODE} --gpu $@
+srun -u -l ${SHIFTER} python test_ddp.py --gpu $@
