@@ -17,7 +17,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', default='resnet50',
                         choices=['simple', 'resnet50'])
-    parser.add_argument('--ranks-per-node', type=int, default=8)
+    parser.add_argument('--ranks-per-node', type=int)
     parser.add_argument('--backend', default='nccl',
                         choices=['mpi', 'nccl', 'gloo'])
     parser.add_argument('--init-method', default='env',
@@ -31,7 +31,11 @@ def main():
     # Initialize distributed library
     init_workers(args.backend, args.init_method)
     rank, n_ranks = dist.get_rank(), dist.get_world_size()
-    local_rank = rank % args.ranks_per_node
+    # Backwards compatible ranks-per-node CL argument
+    if args.ranks_per_node is not None:
+        local_rank = rank % args.ranks_per_node
+    else:
+        local_rank = int(os.environ['LOCAL_RANK'])
     print('Initialized host', socket.gethostname(),
           'rank', rank, 'local-rank', local_rank, 'size', n_ranks)
 

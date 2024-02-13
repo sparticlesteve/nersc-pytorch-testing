@@ -32,3 +32,5 @@ export NCCL_DEBUG=INFO
 
 # MPI4Py test
 ./scripts/run_mpi4py_test.sh
+
+echo "SUCCESS"
