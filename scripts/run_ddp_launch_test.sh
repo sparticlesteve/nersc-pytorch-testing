@@ -2,7 +2,7 @@
 #SBATCH -J ddp-test
 #SBATCH -C gpu
 #SBATCH -N 1
-#SBATCH -t 30
+#SBATCH -t 10
 #SBATCH --ntasks-per-node 1
 #SBATCH --cpus-per-task 128
 #SBATCH --gpus-per-node 4
@@ -30,4 +30,6 @@ cd integration-tests
 srun ${SHIFTER} torchrun \
     --nnodes=$SLURM_JOB_NUM_NODES \
     --nproc-per-node=$SLURM_GPUS_PER_NODE \
+    --rdzv-backend=c10d \
+    --rdzv-endpoint=$MASTER_ADDR:$MASTER_PORT \
     test_ddp.py --gpu $@
