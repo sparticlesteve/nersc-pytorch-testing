@@ -21,7 +21,7 @@ echo "Image: $SLURM_SPANK_SHIFTER_IMAGEREQUEST"
 echo "Extra args: $@"
 module list
 
-[ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER=shifter
+[ -z $SLURM_SPANK_SHIFTER_IMAGE ] || SHIFTER="shifter --module=gpu,nccl-plugin"
 export MASTER_ADDR=$(hostname)
 export MASTER_PORT=29507
 
