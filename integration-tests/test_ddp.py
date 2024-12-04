@@ -1,5 +1,5 @@
 """
-Test of PyTorch DistributedDataParallel for Cori GPU installations
+Test of PyTorch DistributedDataParallel for GPU installations
 """
 
 import os
