@@ -93,6 +93,9 @@ def main():
     # Testing a barrier at the end
     torch.distributed.barrier()
 
+    # Terminate process group
+    torch.distributed.destroy_process_group()
+
     print('Finished')
 
 if __name__ == '__main__':
